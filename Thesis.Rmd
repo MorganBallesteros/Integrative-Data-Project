@@ -41,23 +41,19 @@ library("ggplot2")
 library("readr")
 library("stringr")
 library("tinylabels")
+library("here")
 r_refs("r-references.bib")
 
 # Source (load) your function definitions from an .R script in the R/ folder.
 # This ensures any functions you wrote in scripts are available in this Quarto session.
-source("R/score_manifestos.R")
+source(here::here("Thesis", "score_manifestos.R"))
 ```
 
-```{r}
-#| label: import-processed
-#| echo: false
-#| message: false
-#| warning: false
-#| results: false
+```{r import-processed, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
 
 # Read the processed scoring output produced earlier (relative path inside your repo).
 # show_col_types = FALSE prevents readr from printing the column type summary.
-scores <- readr::read_csv("data/processed/manifesto_scores.csv", show_col_types = FALSE)
+scores <- readr::read_csv(here::here("Thesis", "data", "processed", "manifesto_scores.csv"))
 
 # Quick structural check for you while developing (column names/types, a few values).
 # With results: false, this will not print in the PDF, but it *will* run.

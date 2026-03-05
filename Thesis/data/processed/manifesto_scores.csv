@@ -1,0 +1,94 @@
+doc_id,segment_id,marker,count,word_count,prevalence
+1160_KennedyIchbin,1,war,0,691,0
+142Thunberg,1,war,0,785,0
+1945 Labour Party Manifesto -,1,war,35,5134,6.8172964550058435
+1949_simone-de-beauvoir-the-second-sex,1,war,57,351507,0.16215893282352842
+anders_breivik_-_2083_manifesto_-_2011,1,war,951,802073,1.1856776128856101
+Atlantic-Charter,1,war,1,1037,0.9643201542912248
+brenton-tarrant-the-great-replacement-manifesto,1,war,17,16984,1.0009420631182289
+cho_manifesto_1.1,1,war,1,2203,0.45392646391284613
+Communist Manifesto,1,war,17,39076,0.4350496468420514
+DefeatingEurabia1,1,war,152,135135,1.124801124801125
+Earnest-Manifesto-042719,1,war,2,4430,0.45146726862302483
+"Four Freedoms Speech, Franklin Delano Roosevelt (1)",1,war,16,3387,4.7239444936521995
+Full_text_I_Have_a_Dream_,1,war,0,1695,0
+Hitler_Adolf_-_Mein_Kampf,1,war,340,273713,1.242177024839887
+Imperium - Yockey,1,war,971,185034,5.247684209388544
+"Maududi, Sayyid Abul A'la - Al Jihad Fil Islam by Syed Abul Aala Maududi",1,war,883,157287,5.613941393757908
+milestones-f1,1,war,25,68527,0.36481970610124476
+patrick_crusius_-_the_inconvenient_truth_about_me,1,war,0,2422,0
+"Pierce, William L. - FREE SPEECH ESSAYS 1995-2002",1,war,1538,929691,1.6543130997288347
+PortHuronStatement,1,war,22,8807,2.498012944248893
+Revolt Against The Modern World - Julius Evola,1,war,150,200238,0.749108560812633
+rodger_manifesto,1,war,15,109566,0.13690378402059034
+roofmanifesto,1,war,0,2460,0
+"Russian Imperial Manifesto, Announcing the Start of War in August 1914",1,war,3,447,6.7114093959731544
+ted-kaczynski-industrial-society-and-its-future-copy-sent-to-the-post,1,war,6,35677,0.16817557530061386
+the-lawful-and-the-prohibited-in-islam_text,1,war,17,122093,0.13923812175964223
+the state and revolution - lenin,1,war,40,40117,0.9970835306727821
+the urban guerilla concept,1,war,5,9698,0.5155702206640544
+universal declaration of human rights,1,war,0,1784,0
+velayat_faqeeh - Khomeini,1,war,19,62541,0.30380070673638093
+what is to be done - lenin,1,war,17,67459,0.25200492150787884
+1160_KennedyIchbin,1,violence,0,691,0
+142Thunberg,1,violence,0,785,0
+1945 Labour Party Manifesto -,1,violence,0,5134,0
+1949_simone-de-beauvoir-the-second-sex,1,violence,48,351507,0.13655489079876076
+anders_breivik_-_2083_manifesto_-_2011,1,violence,218,802073,0.27179570936809994
+Atlantic-Charter,1,violence,0,1037,0
+brenton-tarrant-the-great-replacement-manifesto,1,violence,12,16984,0.7065473386716911
+cho_manifesto_1.1,1,violence,0,2203,0
+Communist Manifesto,1,violence,0,39076,0
+DefeatingEurabia1,1,violence,68,135135,0.5032005032005031
+Earnest-Manifesto-042719,1,violence,0,4430,0
+"Four Freedoms Speech, Franklin Delano Roosevelt (1)",1,violence,0,3387,0
+Full_text_I_Have_a_Dream_,1,violence,1,1695,0.5899705014749262
+Hitler_Adolf_-_Mein_Kampf,1,violence,14,273713,0.05114846572870123
+Imperium - Yockey,1,violence,12,185034,0.06485294594506956
+"Maududi, Sayyid Abul A'la - Al Jihad Fil Islam by Syed Abul Aala Maududi",1,violence,6,157287,0.03814682713765283
+milestones-f1,1,violence,1,68527,0.01459278824404979
+patrick_crusius_-_the_inconvenient_truth_about_me,1,violence,0,2422,0
+"Pierce, William L. - FREE SPEECH ESSAYS 1995-2002",1,violence,157,929691,0.168873313821474
+PortHuronStatement,1,violence,3,8807,0.3406381287612127
+Revolt Against The Modern World - Julius Evola,1,violence,20,200238,0.09988114144168439
+rodger_manifesto,1,violence,0,109566,0
+roofmanifesto,1,violence,0,2460,0
+"Russian Imperial Manifesto, Announcing the Start of War in August 1914",1,violence,0,447,0
+ted-kaczynski-industrial-society-and-its-future-copy-sent-to-the-post,1,violence,11,35677,0.30832188805112537
+the-lawful-and-the-prohibited-in-islam_text,1,violence,2,122093,0.01638095550113438
+the state and revolution - lenin,1,violence,11,40117,0.2741979709350151
+the urban guerilla concept,1,violence,8,9698,0.8249123530624871
+universal declaration of human rights,1,violence,0,1784,0
+velayat_faqeeh - Khomeini,1,violence,0,62541,0
+what is to be done - lenin,1,violence,5,67459,0.07411909456114084
+1160_KennedyIchbin,1,attack,0,691,0
+142Thunberg,1,attack,0,785,0
+1945 Labour Party Manifesto -,1,attack,0,5134,0
+1949_simone-de-beauvoir-the-second-sex,1,attack,15,351507,0.04267340337461274
+anders_breivik_-_2083_manifesto_-_2011,1,attack,207,802073,0.2580812469687921
+Atlantic-Charter,1,attack,0,1037,0
+brenton-tarrant-the-great-replacement-manifesto,1,attack,66,16984,3.8860103626943006
+cho_manifesto_1.1,1,attack,1,2203,0.45392646391284613
+Communist Manifesto,1,attack,4,39076,0.10236462278636504
+DefeatingEurabia1,1,attack,22,135135,0.1628001628001628
+Earnest-Manifesto-042719,1,attack,5,4430,1.128668171557562
+"Four Freedoms Speech, Franklin Delano Roosevelt (1)",1,attack,3,3387,0.8857395925597874
+Full_text_I_Have_a_Dream_,1,attack,0,1695,0
+Hitler_Adolf_-_Mein_Kampf,1,attack,57,273713,0.2082473247525693
+Imperium - Yockey,1,attack,25,185034,0.13511030405222824
+"Maududi, Sayyid Abul A'la - Al Jihad Fil Islam by Syed Abul Aala Maududi",1,attack,47,157287,0.29881681257828047
+milestones-f1,1,attack,4,68527,0.05837115297619916
+patrick_crusius_-_the_inconvenient_truth_about_me,1,attack,10,2422,4.1288191577208915
+"Pierce, William L. - FREE SPEECH ESSAYS 1995-2002",1,attack,307,929691,0.3302172442241562
+PortHuronStatement,1,attack,0,8807,0
+Revolt Against The Modern World - Julius Evola,1,attack,10,200238,0.049940570720842195
+rodger_manifesto,1,attack,6,109566,0.05476151360823613
+roofmanifesto,1,attack,0,2460,0
+"Russian Imperial Manifesto, Announcing the Start of War in August 1914",1,attack,1,447,2.237136465324385
+ted-kaczynski-industrial-society-and-its-future-copy-sent-to-the-post,1,attack,8,35677,0.22423410040081845
+the-lawful-and-the-prohibited-in-islam_text,1,attack,4,122093,0.03276191100226876
+the state and revolution - lenin,1,attack,2,40117,0.049854176533639105
+the urban guerilla concept,1,attack,1,9698,0.10311404413281089
+universal declaration of human rights,1,attack,0,1784,0
+velayat_faqeeh - Khomeini,1,attack,4,62541,0.06395804352344861
+what is to be done - lenin,1,attack,16,67459,0.2371811025956507
