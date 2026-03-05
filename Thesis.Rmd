@@ -7,10 +7,6 @@ author:
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
     email         : "mballesteros@uchicago.edu"
-    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
-      - "Conceptualization"
-      - "Writing - Original Draft Preparation"
-      - "Writing - Review & Editing"
 
 affiliation:
   - id            : "1"
