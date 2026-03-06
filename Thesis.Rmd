@@ -97,26 +97,30 @@ The current study contributes to research seeking to identify differences betwee
 
 ## Manifesto Selection
 
-This study must include manifestos that can be placed into one of three categories; (a) violent self-sacrificial, (b) ideologically extreme, and (c) moderate (Ebner et al., 2025). It must also afford longitudinal analysis. Thus, this selection will include not only one-off manifestos already analyzed in the aforementioned literature (e.g.,  Anders Behring Breivik’s Manifesto of the Norway Attacks, 2011; Marx & Engels Manifesto of the Communist Party, 1848), but also sets of writings of individual authors across time (e.g., selections of Vladimir Lenin’s letters). Materials will include ten manifestos for each of the aforementioned categories, and three longitudinal sets of writings for each category. Including the 15 manifestos previously analyzed in the literature brings the study to a categorical count as follows: (a) nine violent self-sacrificial texts, (b) three ideologically extreme texts, and (c) 3 moderate texts. Each of these texts are one-off samples. To fill out the rest of the ten one-off samples for each category, manifestos will be selected according to their place on the political spectrum (i.e., left to right political platforms), individual actor-author texts versus platform-representative texts, and length in order to match each category along these factors. The same factors will be considered in choosing longitudinal samples, ideally including qualitatively matching samples across categories.
-  
+This study includes manifestos divided into three categories following Ebner et al. (2025); (a) violent self-sacrificial, (b) ideologically extreme, and (c) moderate. It also affords longitudinal analysis. I selected not only one-off manifestos already analyzed in the aforementioned literature (e.g.,  Anders Behring Breivik’s Manifesto of the Norway Attacks, 2011; Marx & Engels Manifesto of the Communist Party, 1848), but also sets of writings of individual authors across time (e.g., selections of Vladimir Lenin’s letters). Materials include ten manifestos for each of the aforementioned categories, and three longitudinal sets of writings for each category. Incorporating the 15 manifestos previously analyzed in the literature brings the study to a categorical count as follows: (a) nine violent self-sacrificial texts, (b) three ideologically extreme texts, and (c) 3 moderate texts. Each of these texts are one-off samples. To fill out the rest of the ten one-off samples for each category, manifestos were selected according to their place on the political spectrum (i.e., left to right political platforms), individual actor-author texts versus platform-representative texts, and length in order to match each category along these factors. The same factors were considered in choosing longitudinal samples, and selection included qualitatively matching samples across categories.
+#| Update manifesto selection examples in brackets.
+#| Did I appropriately select manifestos according to their place on the political spectrum as indicated above?
+
 ## Measures
   *Linguistic Indicators.* Ebner et al. (2025) supplies a list of words that indicate
 justifications of violence and, as a higher-order category of linguistic markers, violence
-condoning norms. The current study will use the set of words indicating violence condoning
+condoning norms. The current study uses the set of words indicating violence condoning
 norms with minor alterations. First, indicators like “need for jihaad” (Ebner et al., 2025)
-will be replaced with relevant phrasing (e.g., need for war; need for revolution). Second,
+have been replaced with relevant phrasing (e.g., need for war; need for revolution). Second,
 specific indicators of talk about harm in dyadic morality (e.g., harm, damage, agent,
-patient, intentional) will be added to the list of indicators.  
+patient, intentional) have been added to the list of indicators. 
+#| Do I still agree with replacement? If so, I need to update run_scoring again.
 	*Automated Integrative Complexity.* Hand-scoring integrative complexity is an involved
 process requiring multiple scorers and often hours of work per scored material. In light of
-time and manpower limitations, this study will instead use automated integrative complexity
+time and manpower limitations, this study instead uses automated integrative complexity
 (Conway et al., 2014) to score materials, a measure that uses linguistic markers of
 differentiation and integration to construct an automated account of integrative complexity.
 While automated integrative complexity does not correlate perfectly with hand scores 
 (document-level correlation of .82, paragraph-level correlation of .46, Conway et al., 
 2020), it is an increasingly validated measure in its own right and often used as an 
-efficient and effective replacement for hand scoring. This study will use the document-level
+efficient and effective replacement for hand scoring. This study uses the document-level
 scores for all analyses.  
+#| I forgot to do this part in time for integrative data project; IGNORE AUTOMATED INTEGRATIVE COMPLEXITY PARTS!
 	*Violence.* Previously analyzed manifestos are easily delineated as to whether they cause 
 violence; some manifestos precede lone-actor attacks by their author, the other manifestos 
 did not precede violence enacted by their author. The present study maintains this 
