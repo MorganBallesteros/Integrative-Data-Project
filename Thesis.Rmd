@@ -147,6 +147,8 @@ compared in the same manner as prevalence rates. I will also run regression anal
 longitudinal manifesto sets in order to understand the effect changes in integrative 
 complexity have on likelihood of violence. I will repeat these analyses for linguistic 
 markers of harm on said longitudinal sets.
+#| Need to include other categories of markers of violence condoning norms, perhaps even splitting the markers into categories such that I can examine prevalence of individual markers, marker categories, and violence condoning norms all together.
+#| Probably need to rewrite this section, at least by tense, but also distribute in different areas of the methods.
 	
 # Discussion
 
