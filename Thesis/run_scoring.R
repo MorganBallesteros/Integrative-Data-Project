@@ -1,49 +1,235 @@
 # Purpose:
-#   Run the full scoring pipeline from raw PDF files to a processed CSV output.
+#   Run the full scoring pipeline from raw PDF files to processed CSV outputs.
 #
 # Expected inputs:
-#   - Raw PDFs stored in: data/raw/pdfs/
+#   - Raw PDFs stored in: Thesis/data/raw/pdfs/
+#   - Marker dictionary stored in: Thesis/data/markers/marker_dictionary.csv
 #
-# Expected output:
-#   - Scored CSV stored in: data/processed/manifesto_scores.csv
+# Expected outputs:
+#   - Marker-level scores: Thesis/data/processed/manifesto_scores_markers.csv
+#   - Group-level scores: Thesis/data/processed/manifesto_scores_groups.csv
+#   - Category-level scores: Thesis/data/processed/manifesto_scores_categories.csv
+#   - Segment-level derived indicator:
+#       Thesis/data/processed/role_model_glorification_segments.csv
+#   - Document-level derived indicator:
+#       Thesis/data/processed/role_model_glorification_docs.csv
 #
 # Notes for reproducibility:
 #   - This script uses input_type = "pdf", which requires the 'pdftools' package.
-#   - The Quarto report can be rendered from the processed CSV without needing pdftools,as long as the CSV is already present in the repository.
+#   - The thesis Rmd can read the processed CSV files without re-extracting PDFs.
+#   - Scoring is done at the paragraph level so co-occurrence indicators can be built
+#     within segments rather than only at the whole-document level.
 
-# Load the scoring function (and its dependencies + helper functions)
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(readr)
+  library(here)
+})
+
+# ------------------------------------------------------------
+# Load scoring function
+# ------------------------------------------------------------
 source(here::here("Thesis", "score_manifestos.R"))
 
-# Find all PDF files in the raw PDF directory.
-# pattern = "\\.pdf$": match filenames ending in .pdf
-# full.names = TRUE: return full relative paths, not just filenames
-# ignore.case = TRUE: match .PDF as well as .pdf
+# ------------------------------------------------------------
+# Read marker dictionary
+# ------------------------------------------------------------
+marker_dict <- readr::read_csv(
+  here::here("Thesis", "data", "markers", "marker_dictionary.csv"),
+  show_col_types = FALSE
+)
+
+# Basic validation
+required_cols <- c("marker", "marker_group", "marker_category")
+missing_cols <- setdiff(required_cols, names(marker_dict))
+
+if (length(missing_cols) > 0) {
+  stop(
+    paste(
+      "marker_dictionary.csv is missing required columns:",
+      paste(missing_cols, collapse = ", ")
+    )
+  )
+}
+
+# Extract marker vector for scoring
+markers <- marker_dict$marker
+
+if (length(markers) == 0) {
+  stop("No markers found in marker_dictionary.csv.")
+}
+
+# ------------------------------------------------------------
+# Find all PDFs
+# ------------------------------------------------------------
+pdf_dir <- here::here("Thesis", "data", "raw", "pdfs")
+
 pdf_paths <- list.files(
-  "Thesis/data/raw/pdfs",
+  pdf_dir,
   pattern = "\\.pdf$",
   full.names = TRUE,
   ignore.case = TRUE
 )
 
-# Define the marker list (the words/phrases you want to count).
-markers <- c("harm", "damage", "agent", "patient", "intention", "intentional", "preemptive", "defend", "protect", "self-defense", "forced to fight", "no longer ignore", "act of defense", "purified", "purify", "brutal steps should have been used", "need for jihaad", "reasons for jihaad", "need for war", "the struggle is imposed upon", "natural struggle", "cannot coexist")
+cat("PDF directory:", pdf_dir, "\n")
+cat("Directory exists?:", dir.exists(pdf_dir), "\n")
+cat("Number of PDFs found:", length(pdf_paths), "\n")
 
-# Run the main function in PDF mode:
-# - input_type = "pdf": read and extract raw text from PDFs
-# - segment = "document": treat each PDF as a single unit (one segment per doc)
-# - output = "long": tidy output (doc × marker rows)
-# - write_out = TRUE: export results to CSV for later analysis/reporting
-# - quiet = FALSE: print progress messages while extracting/writing
+if (length(pdf_paths) == 0) {
+  stop(
+    paste(
+      "No PDF files found in:",
+      pdf_dir,
+      "\nCheck the folder path and confirm the PDFs are present."
+    )
+  )
+}
+
+# ------------------------------------------------------------
+# Run scoring at the paragraph level
+# ------------------------------------------------------------
 res <- score_manifestos(
   input_type = "pdf",
   pdf_paths = pdf_paths,
   markers = markers,
-  segment = "document",
+  segment = "paragraph",
   output = "long",
-  write_out = TRUE,
-  out_path = "Thesis/data/processed/manifesto_scores.csv",
+  write_out = FALSE,
   quiet = FALSE
 )
 
-print(dplyr::glimpse(res$scores_long))
+# Marker-level scored output
+scores_long <- res$scores
+
+# ------------------------------------------------------------
+# Annotate scored rows with group/category metadata
+# ------------------------------------------------------------
+scores_annotated <- scores_long %>%
+  dplyr::left_join(marker_dict, by = "marker")
+
+# Check for unmatched markers
+if (any(is.na(scores_annotated$marker_group) | is.na(scores_annotated$marker_category))) {
+  warning("Some scored markers did not match the dictionary.")
+  print(
+    scores_annotated %>%
+      dplyr::filter(is.na(marker_group) | is.na(marker_category)) %>%
+      dplyr::distinct(marker)
+  )
+}
+
+# ------------------------------------------------------------
+# Marker-level output
+# ------------------------------------------------------------
+marker_scores <- scores_annotated %>%
+  dplyr::select(
+    doc_id,
+    segment_id,
+    marker,
+    marker_group,
+    marker_category,
+    count,
+    word_count,
+    prevalence
+  )
+
+# ------------------------------------------------------------
+# Group-level output
+# Prevalence is recomputed from summed counts, not averaged from marker prevalences
+# ------------------------------------------------------------
+group_scores <- scores_annotated %>%
+  dplyr::group_by(doc_id, segment_id, marker_group, marker_category) %>%
+  dplyr::summarise(
+    count = sum(count, na.rm = TRUE),
+    word_count = max(word_count, na.rm = TRUE),
+    prevalence = (count / word_count) * 1000,
+    .groups = "drop"
+  )
+
+# ------------------------------------------------------------
+# Category-level output
+# ------------------------------------------------------------
+category_scores <- scores_annotated %>%
+  dplyr::group_by(doc_id, segment_id, marker_category) %>%
+  dplyr::summarise(
+    count = sum(count, na.rm = TRUE),
+    word_count = max(word_count, na.rm = TRUE),
+    prevalence = (count / word_count) * 1000,
+    .groups = "drop"
+  )
+
+# ------------------------------------------------------------
+# Derived indicator:
+# violent reference + role model status within the same segment
+# ------------------------------------------------------------
+role_model_glorification_segments <- scores_annotated %>%
+  dplyr::group_by(doc_id, segment_id) %>%
+  dplyr::summarise(
+    has_violent_reference = any(marker_group == "violent_reference" & count > 0, na.rm = TRUE),
+    has_role_model_status = any(marker_group == "role_model_status" & count > 0, na.rm = TRUE),
+    violent_reference_count = sum(count[marker_group == "violent_reference"], na.rm = TRUE),
+    role_model_status_count = sum(count[marker_group == "role_model_status"], na.rm = TRUE),
+    word_count = max(word_count, na.rm = TRUE),
+    role_model_glorification = has_violent_reference & has_role_model_status,
+    .groups = "drop"
+  )
+
+role_model_glorification_docs <- role_model_glorification_segments %>%
+  dplyr::group_by(doc_id) %>%
+  dplyr::summarise(
+    any_role_model_glorification = any(role_model_glorification, na.rm = TRUE),
+    n_glorification_segments = sum(role_model_glorification, na.rm = TRUE),
+    total_violent_reference_count = sum(violent_reference_count, na.rm = TRUE),
+    total_role_model_status_count = sum(role_model_status_count, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# ------------------------------------------------------------
+# Ensure processed output directory exists
+# ------------------------------------------------------------
+processed_dir <- here::here("Thesis", "data", "processed")
+dir.create(processed_dir, recursive = TRUE, showWarnings = FALSE)
+
+# ------------------------------------------------------------
+# Write outputs
+# ------------------------------------------------------------
+readr::write_csv(
+  marker_scores,
+  here::here("Thesis", "data", "processed", "manifesto_scores_markers.csv")
+)
+
+readr::write_csv(
+  group_scores,
+  here::here("Thesis", "data", "processed", "manifesto_scores_groups.csv")
+)
+
+readr::write_csv(
+  category_scores,
+  here::here("Thesis", "data", "processed", "manifesto_scores_categories.csv")
+)
+
+readr::write_csv(
+  role_model_glorification_segments,
+  here::here("Thesis", "data", "processed", "role_model_glorification_segments.csv")
+)
+
+readr::write_csv(
+  role_model_glorification_docs,
+  here::here("Thesis", "data", "processed", "role_model_glorification_docs.csv")
+)
+
+# ------------------------------------------------------------
+# Console checks
+# ------------------------------------------------------------
+cat("\nWrote processed files to:\n", processed_dir, "\n\n")
+
+cat("Marker-level rows:", nrow(marker_scores), "\n")
+cat("Group-level rows:", nrow(group_scores), "\n")
+cat("Category-level rows:", nrow(category_scores), "\n")
+cat("Role-model glorification segment rows:", nrow(role_model_glorification_segments), "\n")
+cat("Role-model glorification doc rows:", nrow(role_model_glorification_docs), "\n\n")
+
+print(dplyr::glimpse(marker_scores))
+print(dplyr::glimpse(group_scores))
+print(dplyr::glimpse(category_scores))
+print(dplyr::glimpse(role_model_glorification_docs))
 
