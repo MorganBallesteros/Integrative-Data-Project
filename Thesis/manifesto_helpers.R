@@ -35,7 +35,22 @@ normalize_text <- function(x, to_lower = TRUE) {
   out   # Return cleaned string
 }
 
-# Escape regex metacharacters and build a whole-word pattern
+# ------------------------------------------------------------
+# build_marker_regex()
+# ------------------------------------------------------------
+# Build a regex pattern for a marker by:
+#   - escaping regex metacharacters
+#   - wrapping the result in word boundaries
+#
+# Why:
+#   This allows marker strings to be counted literally rather than interpreted
+#   as regex syntax, while reducing false positives from substring matches.
+#
+# Args:
+#   marker: a single marker string
+#
+# Returns:
+#   a regex pattern string suitable for stringr::str_count()
 build_marker_regex <- function(marker) {
   safe <- str_replace_all(
     marker,
