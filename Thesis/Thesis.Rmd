@@ -44,20 +44,76 @@ library("tinylabels")
 library("here")
 r_refs("r-references.bib")
 
+if (!requireNamespace("pdftools", quietly = TRUE)) {
+  install.packages("pdftools")
+}
 # Source (load) your function definitions from an .R script in the R/ folder.
 # This ensures any functions you wrote in scripts are available in this Quarto session.
 source(here::here("Thesis", "score_manifestos.R"))
 ```
 
-```{r import-processed, echo=FALSE, message=FALSE, warning=FALSE, results="hide"}
+```{r setup-data, echo=FALSE, message=FALSE, warning=FALSE}
+# ------------------------------------------------------------
+# Ensure processed scoring files exist
+# ------------------------------------------------------------
+# Purpose:
+#   Guarantee that the processed scoring outputs exist before the
+#   thesis analysis proceeds.
+#
+# Reproducibility logic:
+#   If the processed CSV files are not present, the scoring pipeline
+#   (run_scoring.R) is executed automatically. This allows the thesis
+#   document to be rendered from a clean repository by simply
+#   knitting the R Markdown file.
 
-# Read the processed scoring output produced earlier (relative path inside your repo).
-scores <- readr::read_csv(here::here("Thesis", "data", "processed", "manifesto_scores.csv"))
+library(here)
+library(readr)
+library(dplyr)
 
-# Quick structural check for you while developing (column names/types, a few values).
-# With results: false, this will not print in the PDF, but it *will* run.
-dplyr::glimpse(scores)
+processed_file <- here::here(
+  "Thesis",
+  "data",
+  "processed",
+  "manifesto_scores_groups.csv"
+)
+
+if (!file.exists(processed_file)) {
+
+  message("Processed scoring files not found.")
+  message("Running scoring pipeline...")
+
+  source(here::here("Thesis","run_scoring.R"))
+
+  message("Scoring pipeline complete.")
+
+}
+
+# ------------------------------------------------------------
+# Load processed scoring outputs
+# ------------------------------------------------------------
+
+marker_scores <- read_csv(
+  here::here("Thesis","data","processed","manifesto_scores_markers.csv"),
+  show_col_types = FALSE
+)
+
+group_scores <- read_csv(
+  here::here("Thesis","data","processed","manifesto_scores_groups.csv"),
+  show_col_types = FALSE
+)
+
+category_scores <- read_csv(
+  here::here("Thesis","data","processed","manifesto_scores_categories.csv"),
+  show_col_types = FALSE
+)
+
+role_model_docs <- read_csv(
+  here::here("Thesis","data","processed","role_model_glorification_docs.csv"),
+  show_col_types = FALSE
+)
 ```
+
+
 
 
 ```{r analysis-preferences}
@@ -154,32 +210,85 @@ markers of harm on said longitudinal sets.
 Probably need to rewrite this section, at least by tense, but also distribute in different areas of the methods.
 -->
 
-```{r, label=descriptives mean prevalence, echo=false, warning=false, message=false, results=false}
+```{r group-descriptives, echo=FALSE, message=FALSE, warning=FALSE}
+# ------------------------------------------------------------
+# Descriptive statistics for marker groups
+# ------------------------------------------------------------
+# Purpose:
+#   Summarize the prevalence distribution of each marker group across the corpus.
+#
+# Why grouped descriptives are used:
+#   The marker dictionary classifies individual lexical indicators into broader
+#   theoretical groups (e.g., dyadic harm, martyrdom narrative, hopelessness).
+#   These grouped summaries are more interpretable than raw marker-level tables
+#   and reduce visual clutter in the main text.
+#
+# Output:
+#   group_descriptives = summary table with central tendency and spread for
+#                        each marker group.
+#
+# Interpretation:
+#   Prevalence values represent grouped marker counts per 1,000 words.
 
-# Compute mean prevalence for each marker across all documents.
-# - group_by(marker): separate rows by marker (e.g., war/violence/attack)
-# - summarize(): reduce each marker group to a single row (the mean prevalence)
-# - na.rm = TRUE: ignore any missing prevalence values
-# - .groups = "drop": return an ungrouped tibble after summarizing
-by_cat <- scores %>%
-  group_by(marker) %>%
-  summarize(mean_prev = mean(prevalence, na.rm = TRUE), .groups = "drop")
+group_descriptives <- group_scores |>
+  dplyr::group_by(marker_group) |>
+  dplyr::summarise(
+    mean_prevalence = mean(prevalence, na.rm = TRUE),
+    sd_prevalence = sd(prevalence, na.rm = TRUE),
+    min_prevalence = min(prevalence, na.rm = TRUE),
+    max_prevalence = max(prevalence, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  dplyr::arrange(dplyr::desc(mean_prevalence))
 
-# Printing the object would show a tibble in the PDF; we suppress results above to keep the report clean.
-by_cat
-
+group_descriptives
 ```
 
-```{r, label=plot1, echo=false, warning=false, message=false, fig-cap="mean prevalence by marker."}
 
-# Bar chart of mean prevalence by marker.
-# - aes(x = marker, y = mean_prev): marker labels on x-axis; mean prevalence on y-axis
-# - fill = marker: gives each bar a different fill color by marker
-ggplot(by_cat, aes(x = marker, y = mean_prev, fill = marker)) + 
-  geom_col() + 
-  labs(x = "Marker", y = "Mean prevalence")
 
+
+
+
+
+```{r group-prevalence-plot, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=5}
+# ------------------------------------------------------------
+# Plot mean prevalence by marker group
+# ------------------------------------------------------------
+# Purpose:
+#   Visualize the average prevalence of each marker group across documents.
+#
+# Why this plot is useful:
+#   The raw marker-level output contains too many individual indicators for a
+#   readable main-text figure. Aggregating to marker groups makes the figure
+#   interpretable while preserving the main substantive distinctions in the data.
+#
+# Plot logic:
+#   First compute mean prevalence for each marker group, then plot those means
+#   as horizontal bars ordered from lowest to highest prevalence.
+
+group_plot_data <- group_scores |>
+  dplyr::group_by(marker_group) |>
+  dplyr::summarise(
+    mean_prevalence = mean(prevalence, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+ggplot2::ggplot(
+  group_plot_data,
+  ggplot2::aes(
+    x = forcats::fct_reorder(marker_group, mean_prevalence),
+    y = mean_prevalence,
+    fill = marker_group
+  )
+) +
+  ggplot2::geom_col() +
+  ggplot2::coord_flip() +
+  ggplot2::labs(
+    x = "Marker Group",
+    y = "Mean Prevalence per 1,000 Words"
+  )
 ```
+
 
 
 # Discussion
