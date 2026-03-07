@@ -259,7 +259,7 @@ papaja::apa_table(
 
 
 
-```{r group-prevalence-plot, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=5}
+```{r group-prevalence-plot, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.5, fig.height=4.5, fig.cap="Mean prevalence of grouped linguistic indicators of harm justification."}
 # ------------------------------------------------------------
 # Plot mean prevalence by marker group
 # ------------------------------------------------------------
@@ -274,29 +274,54 @@ papaja::apa_table(
 # Plot logic:
 #   First compute mean prevalence for each marker group, then plot those means
 #   as horizontal bars ordered from lowest to highest prevalence.
+#
+# APA formatting choices:
+#   - use a single fill rather than group-specific colors
+#   - remove the legend because the y-axis labels already identify each group
+#   - use clean axis labels and minimal visual clutter
+#   - convert snake_case group labels into publication-readable text
 
 group_plot_data <- group_scores |>
   dplyr::group_by(marker_group) |>
   dplyr::summarise(
     mean_prevalence = mean(prevalence, na.rm = TRUE),
     .groups = "drop"
+  ) |>
+  dplyr::mutate(
+    marker_group_label = marker_group,
+    marker_group_label = stringr::str_replace_all(marker_group_label, "_", " "),
+    marker_group_label = stringr::str_to_title(marker_group_label)
   )
 
 ggplot2::ggplot(
   group_plot_data,
   ggplot2::aes(
-    x = forcats::fct_reorder(marker_group, mean_prevalence),
-    y = mean_prevalence,
-    fill = marker_group
+    x = forcats::fct_reorder(marker_group_label, mean_prevalence),
+    y = mean_prevalence
   )
 ) +
-  ggplot2::geom_col() +
+  ggplot2::geom_col(
+    width = 0.7,
+    fill = "grey70",
+    color = "black"
+  ) +
   ggplot2::coord_flip() +
   ggplot2::labs(
-    x = "Marker Group",
-    y = "Mean Prevalence per 1,000 Words"
+    x = "Marker group",
+    y = "Mean prevalence per 1,000 words"
+  ) +
+  ggplot2::theme_classic(base_size = 11) +
+  ggplot2::theme(
+    legend.position = "none",
+    axis.title = ggplot2::element_text(color = "black"),
+    axis.text = ggplot2::element_text(color = "black"),
+    plot.caption = ggplot2::element_text(hjust = 0)
+  )+ 
+  ggplot2::scale_y_continuous(
+    breaks = scales::pretty_breaks(n = 5)
   )
 ```
+
 
 
 # Discussion

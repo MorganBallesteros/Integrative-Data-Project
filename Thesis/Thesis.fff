@@ -1,0 +1,7 @@
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{Thesis_files/figure-latex/group-prevalence-plot-1.pdf}}
+\caption{\label{fig:group-prevalence-plot}Mean prevalence of grouped linguistic indicators of harm justification.}
+\end{figure*}
