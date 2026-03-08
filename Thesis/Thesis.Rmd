@@ -104,8 +104,7 @@ if (!file.exists(processed_file)) {
 expected_outputs <- c(
   "data/processed/manifesto_scores_markers.csv",
   "data/processed/manifesto_scores_groups.csv",
-  "data/processed/manifesto_scores_categories.csv",
-  "data/processed/role_model_glorification_docs.csv"
+  "data/processed/manifesto_scores_categories.csv"
 )
 
 missing_outputs <- expected_outputs[!file.exists(expected_outputs)]
@@ -135,10 +134,6 @@ category_scores <- read_csv(
   show_col_types = FALSE
 )
 
-role_model_docs <- read_csv(
-  "data/processed/role_model_glorification_docs.csv",
-  show_col_types = FALSE
-)
 ```
 
 
@@ -360,6 +355,96 @@ ggplot2::ggplot(
 ```
 *Note.* Bars represent mean grouped marker prevalence per 1,000 words across documents. Error bars represent 95% confidence intervals. Marker groups aggregate lexical indicators defined in the study's marker dictionary.
 
+## Results
+```{r doc-level-dataset, echo=FALSE, message=FALSE, warning=FALSE}
+# ------------------------------------------------------------
+# Construct document-level dataset for statistical analyses
+# ------------------------------------------------------------
+# The scoring pipeline produces segment-level data because markers
+# are counted within textual segments. However, the hypotheses of
+# this study concern entire manifestos. To avoid pseudoreplication,
+# the segment-level scores are aggregated to the document level.
+
+doc_scores <- group_scores |>
+  dplyr::group_by(doc_id, marker_group) |>
+  dplyr::summarise(
+    prevalence = mean(prevalence, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  tidyr::pivot_wider(
+    names_from = marker_group,
+    values_from = prevalence
+  )
+```
+
+```{r load-doc-meta}
+doc_meta <- readr::read_csv(
+  "data/raw/doc_meta.csv",
+  show_col_types = FALSE
+)
+```
+
+```{r merge-doc-meta}
+doc_scores <- doc_scores |>
+  dplyr::left_join(doc_meta, by = "doc_id")
+```
+
+```{r factorize-category}
+doc_scores$category <- factor(
+  doc_scores$category,
+  levels = c("moderate", "extreme", "violent")
+)
+```
+
+```{r factorize-category}
+doc_scores$category <- factor(
+  doc_scores$category,
+  levels = c("moderate", "extreme", "violent")
+)
+```
+
+```{r descriptives}
+doc_scores |>
+  dplyr::group_by(category) |>
+  dplyr::summarise(
+    dyadic_harm = mean(dyadic_harm),
+    justification = mean(justification_for_violence),
+    martyrdom = mean(martyrdom_narrative),
+    hopelessness = mean(hopelessness),
+    .groups = "drop"
+  )
+```
+
+```{r manifesto-regressions, echo=FALSE, message=FALSE, warning=FALSE}
+# ------------------------------------------------------------
+# Regression analyses predicting marker prevalence from
+# manifesto category
+# ------------------------------------------------------------
+# Purpose:
+#   Test whether linguistic indicators of harm justification
+#   vary systematically across manifesto types.
+
+marker_groups <- c(
+  "dyadic_harm",
+  "justification_for_violence",
+  "martyrdom_narrative",
+  "hopelessness"
+)
+
+models <- lapply(marker_groups, function(m) {
+  lm(as.formula(paste(m, "~ category")), data = doc_scores)
+})
+
+names(models) <- marker_groups
+
+# Print summaries for each model
+for (name in names(models)) {
+  cat("\n\n==============================\n")
+  cat("Marker group:", name, "\n")
+  cat("==============================\n\n")
+  print(summary(models[[name]]))
+}
+```
 
 # Discussion
 
