@@ -624,50 +624,30 @@ papaja::apa_table(
 
 # Discussion
 
-In line with my aforementioned hypotheses, I predict that (a) greater prevalence of
-linguistic indicators of harm will be associated with higher a likelihood of political 
-violence, (b) lower integrative complexity, differentiation, and integration scores will be 
-associated with a higher likelihood of political violence, and (c) decreasing integrative 
-complexity, differentiation, and integration scores longitudinally will be associated with 
-higher likelihoods of political violence. The proposed study adds to the ongoing literature 
-on linguistic markers of political violence and on the predictive power of integrative 
-complexity for major political events. New to the linguistic marker literature is the 
-inclusion of longitudinal data, which is useful in that many of the far-right manifestos 
-studied in the literature are posted online just prior to or after acts of violence, meaning
-that they are limited in their capacity to serve as practically useful predictors of 
-terrorism because those who protect against said violence cannot find and act against such 
-terrorism quickly enough. Integrative complexity is robust in its long-term predictive 
-power, meaning that an analysis of political platform manifestos can be tracked well before 
-violence on their account occurs. Politically oriented research using integrative complexity
-has not yet looked at lone actor terrorism to my knowledge, instead focusing on political 
-leaders’ textual data for its greater accessibility. However, if evaluating manifestos that 
-are published shortly before acts of political violence and manifestos that ground political
-platforms predict violence, both in the long- and short-term, then integrative complexity 
-can become a powerful tool in tracking and stopping what are increasingly prevalent lone 
-actor violent acts. This study thus aims to help public safety policy makers understand the 
-precursors of political violence and intervene before tragedy strikes.
-<!-- Can use this for guide when witing actual discussion, so hold of on deleting.
--->
+The present study examined whether linguistic indicators associated with moral justifications of harm differ systematically across political manifesto types. Specifically, the analysis tested whether grouped linguistic markers related to dyadic harm framing, justification for violence, martyrdom narratives, and expressions of political hopelessness vary across moderate, ideologically extreme, and violent self-sacrificial manifestos. These analyses represent an initial empirical step toward evaluating the broader hypothesis that linguistic indicators of harm justification correspond to an increased likelihood of political violence.
+
+## Interpretation of Findings
+
+The results provide partial support for the proposed theoretical framework. Manifestos categorized as ideologically extreme and violent self-sacrificial exhibited significantly higher levels of dyadic harm language compared with moderate manifestos. In other words, texts associated with more radical ideological positions more frequently framed political conflict in terms of identifiable agents causing harm to identifiable victims.  
+This pattern aligns with research in moral psychology emphasizing the centrality of harm perception in moral judgment. In particular, the theory of dyadic morality proposes that moral cognition is structured around a perceived relationship between a moral agent who causes harm and a moral patient who suffers it. According to this framework, moral judgments frequently emerge from narratives that identify perpetrators, victims, and causal responsibility. The elevated prevalence of dyadic harm language in extreme and violent manifestos suggests that such texts more frequently construct political grievances in explicitly moralized terms, portraying social or political conflict as situations in which identifiable actors harm identifiable victims.  
+However, the remaining linguistic indicators examined in this study (i.e., justifications for violence, martyrdom narratives, and expressions of political hopelessness) did not differ significantly across manifesto categories. Although these markers were intended to capture rhetorical patterns that legitimize or normalize violence, the results suggest that such language may be present across ideological texts more broadly. Radical political discourse may therefore share similar rhetorical structures regardless of whether it ultimately culminates in violent action.  
+One interpretation of this pattern is that linguistic indicators of harm justification may reflect ideological radicalization more generally rather than violence-producing ideologies specifically. The presence of such rhetoric may represent an early stage of moral framing in which political conflicts are interpreted through narratives of victimization and moral grievance. Whether such narratives translate into violent action may depend on additional psychological, cognitive, or situational factors that extend beyond linguistic framing alone.  
+Importantly, the present analysis represents only an initial component of the broader research design motivating this project. The theoretical framework underlying the study also proposes that integrative complexity, particularly levels of differentiation and integration in reasoning, may play a key role in determining whether ideological beliefs translate into violent action. Previous research in political psychology has demonstrated that integrative complexity can predict major political events, including diplomatic conflict and war escalation. However, its application to the study of lone-actor political violence remains relatively underexplored.  
+Future analyses incorporating automated integrative complexity (AutoIC) scores will allow for direct testing of the remaining hypotheses of this project. Specifically, the study predicts that lower levels of integrative complexity will be associated with a higher likelihood that a manifesto corresponds with political violence. Additionally, longitudinal analyses of texts produced by the same political actors may reveal whether declining levels of integrative complexity precede increasing justification of harm and eventual violent action.
 
 ## Limitations
-
-The availability of political manifestos is the primary limitation of the proposed study. 
-Relevant prior literature on linguistic markers in political manifestos [i.e., @capelos2025today; @ebner2024measuring; @ebner2025there] share sets of either six or 15 
-manifestos, citing issues including “the limited availability of terrorist manifestos, 
-access restrictions to such documents, as well as researcher time considerations” [@ebner2024measuring]. The current study delimits time constraints by using R to automate prevalence 
-rates and automated integrative complexity to measure integrative complexity, but manifesto 
-accessibility remains an issue. To gain statistical power, I will not limit data selection 
-to terrorist manifestos, but will also include writings that contributed to the development 
-of political platforms (i.e., The Manifesto of the Communist Party, which is used in prior 
-literature, and Vladimir Lenin’s What Is To Be Done?, a novel addition). Thus, access to 
-such works through sites like the Marxists Internet Archive provides a wide range of 
-writings to choose from, both as select instances and as pieces of a longitudinal series.  
-<!-- Can use this for guide when witing actual Limitations, so hold of on deleting.
--->
+Several limitations should be considered when interpreting the present findings. The primary limitation concerns the availability of political manifestos. Prior research examining linguistic markers in extremist manifestos has relied on relatively small corpora. For example, studies in this area often analyze sets of six to fifteen manifestos due to the limited availability of such documents, restrictions on access to extremist materials, and the time-intensive nature of manual coding procedures [@capelos2025today; @ebner2024measuring; @ebner2025there]. The present study addresses some of these practical limitations by automating both linguistic prevalence analysis and integrative complexity measurement using computational tools in R. Nevertheless, the accessibility of relevant texts remains a constraint on corpus size.  
+To increase statistical power and broaden the scope of analysis, the present study therefore includes not only terrorist manifestos but also ideological writings that contributed to the development of political platforms. For instance, texts such as *The Manifesto of the Communist Party* — which has been included in prior linguistic studies of political manifestos — are analyzed alongside writings such as Vladimir Lenin’s *What Is to Be Done?*, which has not typically been included in this literature. Expanding the dataset to include ideological platform writings allows for the examination of rhetorical patterns across a wider range of political texts while also enabling longitudinal analysis of authors whose writings span multiple time periods.  
+However, this strategy also introduces conceptual complexity. Political platform writings may differ from terrorist manifestos in important ways, including their intended audience, rhetorical purpose, and historical context. As a result, the linguistic markers observed in such texts may reflect broader ideological discourse rather than mechanisms uniquely associated with political violence.  
+A second limitation concerns the dictionary-based linguistic approach used in the present analysis. Although dictionary methods provide transparency and replicability, they inevitably simplify the semantic richness of political rhetoric. Certain forms of moral justification may therefore occur in ways that are not captured by the specific lexical indicators included in the marker dictionary.  
+Finally, the current analysis does not yet incorporate the integrative complexity measures that constitute a central component of the overall research design. As a result, the findings presented here should be interpreted as preliminary. The analyses primarily demonstrate the feasibility of the linguistic scoring pipeline and provide an initial exploration of how harm-related rhetorical patterns vary across manifesto categories.
 
 ## Future Directions
-
-
+Future research can extend the present work in several important ways. Most immediately, incorporating automated integrative complexity measures will allow for direct testing of whether lower levels of cognitive complexity predict the emergence of political violence. Integrative complexity has demonstrated substantial predictive power in analyses of diplomatic communication and political leadership rhetoric. Applying this approach to the study of political manifestos may therefore provide new insights into the cognitive processes that precede ideological violence.  
+Second, the inclusion of longitudinal textual data offers an opportunity to examine whether changes in linguistic framing and cognitive complexity occur prior to violent action. Many extremist manifestos studied in prior literature are released immediately before or after acts of violence, limiting their usefulness as predictive tools. In contrast, ideological writings and political platform texts often precede violent acts by substantial periods of time. If measurable linguistic or cognitive markers within such texts reliably predict later violence, they could provide valuable signals for identifying escalating radicalization processes.  
+Third, future work could integrate dictionary-based linguistic analysis with more flexible natural language processing techniques. Methods such as semantic embedding models or topic modeling may allow researchers to identify broader patterns of moral and ideological rhetoric that extend beyond predefined lexical indicators.  
+More broadly, integrating linguistic analysis with theoretical frameworks from moral psychology may provide a richer understanding of the cognitive processes underlying political violence. If political grievances are frequently framed through dyadic narratives of harm and victimization, examining how these narratives interact with cognitive structures such as integrative complexity may offer important insight into the psychological pathways through which ideological beliefs develop into violent political action.  
+Taken together, the present findings represent an initial empirical test of the first hypothesis of this project: that linguistic indicators of harm justification correspond with a higher likelihood of political violence. The elevated prevalence of dyadic harm language in ideologically extreme and violent manifestos provides preliminary support for the claim that moralized narratives of harm and victimization may characterize increasingly radical political discourse. However, the remaining hypotheses — specifically that lower levels of integrative complexity predict political violence and that declining integrative complexity over time precedes increasing justification of harm — remain to be tested once automated integrative complexity measures are incorporated into the dataset. The present analysis therefore serves as a preliminary stage in a broader research program aimed at integrating linguistic indicators of moral reasoning with cognitive measures of ideological complexity in order to better understand the psychological precursors of political violence.
 
 ## Data analysis
 We used `r cite_r("r-references.bib")` for all our analyses.
