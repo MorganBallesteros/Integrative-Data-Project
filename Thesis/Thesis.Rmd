@@ -356,6 +356,8 @@ ggplot2::ggplot(
 *Note.* Bars represent mean grouped marker prevalence per 1,000 words across documents. Error bars represent 95% confidence intervals. Marker groups aggregate lexical indicators defined in the study's marker dictionary.
 
 ## Results
+
+
 ```{r doc-level-dataset, echo=FALSE, message=FALSE, warning=FALSE}
 # ------------------------------------------------------------
 # Construct document-level dataset for statistical analyses
