@@ -539,7 +539,60 @@ papaja::apa_table(
 )
 ```
 
+```{r manifesto-model-fit, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# ------------------------------------------------------------
+# Model fit statistics for manifesto-category regressions
+# ------------------------------------------------------------
+# Purpose:
+#   Provide overall fit information for each regression model in a
+#   separate compact table.
 
+model_fit_table <- lapply(names(models), function(name) {
+  model_summary <- summary(models[[name]])
+  
+  tibble::tibble(
+    Outcome = dplyr::case_when(
+      name == "dyadic_harm" ~ "Dyadic Harm",
+      name == "justification_for_violence" ~ "Justification",
+      name == "martyrdom_narrative" ~ "Martyrdom",
+      name == "hopelessness" ~ "Hopelessness",
+      TRUE ~ name
+    ),
+    R2 = round(model_summary$r.squared, 3),
+    Adj_R2 = round(model_summary$adj.r.squared, 3),
+    F = round(model_summary$fstatistic[1], 2),
+    p = dplyr::case_when(
+      stats::pf(
+        model_summary$fstatistic[1],
+        model_summary$fstatistic[2],
+        model_summary$fstatistic[3],
+        lower.tail = FALSE
+      ) < .001 ~ "< .001",
+      TRUE ~ sprintf(
+        "%.3f",
+        stats::pf(
+          model_summary$fstatistic[1],
+          model_summary$fstatistic[2],
+          model_summary$fstatistic[3],
+          lower.tail = FALSE
+        )
+      )
+    )
+  )
+}) |>
+  dplyr::bind_rows() |>
+
+dplyr::rename(
+  `R2` = R2,
+  `Adj. R2` = Adj_R2
+)
+
+papaja::apa_table(
+  model_fit_table,
+  caption = "Model fit statistics for regressions predicting grouped marker prevalence from manifesto category.",
+  note = "R2 = coefficient of determination; Adj. R2 = adjusted coefficient of determination."
+)
+```
 
 
 
