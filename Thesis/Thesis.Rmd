@@ -249,6 +249,10 @@ markers of harm on said longitudinal sets.
 # this study concern entire manifestos. To avoid pseudoreplication,
 # the segment-level scores are aggregated to the document level.
 
+# Convert tidy long data to wide format (one column per marker)
+# This is useful for modeling or visualization but the long
+# structure remains the canonical tidy representation.
+
 doc_scores <- group_scores |>
   dplyr::group_by(doc_id, marker_group) |>
   dplyr::summarise(
@@ -377,6 +381,10 @@ Descriptive statistics were calculated to examine the prevalence of grouped ling
 #
 # Interpretation:
 #   Values represent average grouped marker prevalence per 1,000 words.
+
+# Convert tidy long data to wide format (one column per marker)
+# This is useful for modeling or visualization but the long
+# structure remains the canonical tidy representation.
 
 manifesto_descriptives <- doc_scores |>
   dplyr::group_by(category) |>
